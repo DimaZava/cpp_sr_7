@@ -78,7 +78,7 @@ typename std::enable_if_t<std::is_same<int8_t, T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling int8_t" << std::endl;
+    // std::cout << "Calling int8_t" << std::endl;
     print_ip_arithmetic(ip);
 }
 
@@ -87,7 +87,7 @@ typename std::enable_if_t<std::is_same<int16_t, T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling int16_t" << std::endl;
+    // std::cout << "Calling int16_t" << std::endl;
     print_ip_arithmetic(ip);
 }
 
@@ -96,7 +96,7 @@ typename std::enable_if_t<std::is_same<int32_t, T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling int32_t" << std::endl;
+    // std::cout << "Calling int32_t" << std::endl;
     print_ip_arithmetic(ip);
 }
 
@@ -105,7 +105,7 @@ typename std::enable_if_t<std::is_same<int64_t, T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling int64_t" << std::endl;
+    // std::cout << "Calling int64_t" << std::endl;
     print_ip_arithmetic(ip);
 }
 
@@ -156,7 +156,7 @@ typename std::enable_if_t<std::is_same<std::vector<int>, T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling std::vector<int>" << std::endl;
+    // std::cout << "Calling std::vector<int>" << std::endl;
     print_ip_container(ip);
 }
 
@@ -165,7 +165,7 @@ typename std::enable_if_t<std::is_same<std::list<short>, T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling std::list<short>" << std::endl;
+    // std::cout << "Calling std::list<short>" << std::endl;
     print_ip_container(ip);
 }
 
@@ -176,7 +176,7 @@ typename std::enable_if_t<std::is_same<std::string, T>::value, int> = 0
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling std::string" << std::endl;
+    // std::cout << "Calling std::string" << std::endl;
     std::cout << ip << std::endl;
 }
 
@@ -205,7 +205,7 @@ typename std::enable_if_t<is_tuple<T>::value, bool> = 0
 >
 void print_ip(T ip)
 {
-    std::cout << "Calling std::string" << std::endl;
+    // std::cout << "Calling std::string" << std::endl;
     print(ip);
 }
 
