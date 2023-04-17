@@ -21,6 +21,8 @@
 
 template <typename T,
 typename std::enable_if<std::is_arithmetic<T>::value>::type* = nullptr>
+/// Split arithmetic value to bytes.
+/// - Parameter value: Value to split.
 std::vector<std::bitset<sizeof(T) * 8>> split_arithmetic_value_to_bytes(T const& value)
 {
     const size_t bits_count = sizeof(T) * 8;
@@ -39,6 +41,8 @@ std::vector<std::bitset<sizeof(T) * 8>> split_arithmetic_value_to_bytes(T const&
 }
 
 template <typename T>
+/// Convert bitset to string.
+/// - Parameter bitset: Bitset to convert.
 std::string convert_bitset_to_str(std::bitset<sizeof(T) * 8> bitset)
 {
     int result = 0;
@@ -51,6 +55,8 @@ std::string convert_bitset_to_str(std::bitset<sizeof(T) * 8> bitset)
 }
 
 template <typename T, typename std::enable_if<std::is_arithmetic<T>::value, int>::type = 0>
+/// Print arithmetic "ip" address.
+/// - Parameter ip: Address to print.
 void print_ip_arithmetic(T ip)
 {
     auto bytes_vector = split_arithmetic_value_to_bytes(ip);
@@ -77,6 +83,8 @@ void print_ip_arithmetic(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<int8_t, T>::value, bool> = true
 >
+/// SFINAE print_ip for int8_t.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling int8_t" << std::endl;
@@ -86,6 +94,8 @@ void print_ip(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<int16_t, T>::value, bool> = true
 >
+/// SFINAE print_ip for int16_t.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling int16_t" << std::endl;
@@ -95,6 +105,8 @@ void print_ip(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<int32_t, T>::value, bool> = true
 >
+/// SFINAE print_ip for int32_t.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling int32_t" << std::endl;
@@ -104,6 +116,8 @@ void print_ip(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<int64_t, T>::value, bool> = true
 >
+/// SFINAE print_ip for int64_t.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling int64_t" << std::endl;
@@ -135,6 +149,8 @@ struct is_container<
 template<typename T,
 typename std::enable_if_t<is_container<T>::value, bool> = true
 >
+/// Print "ip" container. Accepts iteratable entity.
+/// - Parameter ip: Container to print.
 void print_ip_container(T ip)
 {
     if (ip.begin() != ip.end())
@@ -155,6 +171,8 @@ void print_ip_container(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<std::vector<int>, T>::value, bool> = true
 >
+/// SFINAE print_ip for vector<int>.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling std::vector<int>" << std::endl;
@@ -164,6 +182,8 @@ void print_ip(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<std::list<short>, T>::value, bool> = true
 >
+/// SFINAE print_ip for list<short>.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling std::list<short>" << std::endl;
@@ -175,6 +195,8 @@ void print_ip(T ip)
 template <typename T,
 typename std::enable_if_t<std::is_same<std::string, T>::value, int> = 0
 >
+/// SFINAE print_ip for string.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling std::string" << std::endl;
@@ -185,6 +207,8 @@ template <typename> struct is_tuple: std::false_type {};
 template <typename ...is_tuple_type> struct is_tuple<std::tuple<is_tuple_type...>>: std::true_type {};
 
 template<class T, size_t... I>
+/// Prints tuple. Performs in runtime.
+/// - Parameter tuple: Tuple to print.
 void print_indexed_sequence(const T& tuple, std::index_sequence<I...>)
 {
     // C++ c'mon, why can't I just iterate over the tuple's contents in more obvious way???
@@ -195,6 +219,8 @@ void print_indexed_sequence(const T& tuple, std::index_sequence<I...>)
 template <typename T,
 typename std::enable_if_t<is_tuple<T>::value, bool> = true
 >
+/// Unpack tuple to print it using runtime mechanisms.
+/// - Parameter tuple: Tuple to print.
 void print(const T& tuple)
 {
     constexpr std::size_t tuple_size = std::tuple_size<T>{};
@@ -205,6 +231,8 @@ void print(const T& tuple)
 template <typename T,
 typename std::enable_if_t<is_tuple<T>::value, bool> = true
 >
+/// SFINAE print_ip for tuples.
+/// - Parameter ip: ip address.
 void print_ip(T ip)
 {
     // std::cout << "Calling std::tuple" << std::endl;
