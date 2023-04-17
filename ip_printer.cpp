@@ -51,6 +51,10 @@ std::string convert_bitset_to_str(std::bitset<sizeof(T) * 8> bitset)
     return std::to_string(result);
 }
 
+void test()
+{
+}
+
 /// Print arithmetic "ip" address.
 /// - Parameter ip: Address to print.
 template <typename T, typename std::enable_if<std::is_arithmetic<T>::value, int>::type = 0>
