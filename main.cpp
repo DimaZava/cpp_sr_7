@@ -1,5 +1,5 @@
 #include <string>
-#include "ip_printer.hpp"
+#include "ip_printer.cpp"
 
 #define UNUSED(variable) (void)variable
 

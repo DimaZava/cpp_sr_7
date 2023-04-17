@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project(sr_7)
 
 add_executable(main main.cpp)
-add_library(ip_printer_lib ip_printer.hpp ip_printer.cpp)
+add_library(ip_printer_lib ip_printer.cpp)
 
 set_target_properties(main ip_printer_lib PROPERTIES
     CXX_STANDARD 17
