@@ -15,6 +15,7 @@
 #include <iostream>
 #include <complex>
 #include <experimental/type_traits>
+#include <numeric>
 
 // Generalized arithmetic based types ip print
 
@@ -180,33 +181,52 @@ void print_ip(T ip)
     std::cout << ip << std::endl;
 }
 
-// Most of this awful tuple stuff is stolen from stackoverflow
-// since there's absolutely no even some kind of simple way just to print it!!!
-// std::get<index> is a template based function, so one should be generated at the build time
-// that's why there's no other way than just to make it like this :(
 template <typename> struct is_tuple: std::false_type {};
-template <typename ...T> struct is_tuple<std::tuple<T...>>: std::true_type {};
+template <typename ...is_tuple_type> struct is_tuple<std::tuple<is_tuple_type...>>: std::true_type {};
 
-template<class TupType, size_t... I>
-void print(const TupType& _tup, std::index_sequence<I...>)
+template<class T, size_t... I>
+void print_indexed_sequence(const T& tuple, std::index_sequence<I...>)
 {
-    (..., (std::cout << (I == 0 ? "" : ".") << std::get<I>(_tup)));
+    // C++ c'mon, why can't I just iterate over the tuple's contents in more obvious way???
+    (..., (std::cout << (I == 0 ? "" : ".") << std::get<I>(tuple)));
     std::cout << std::endl;
 }
 
-template<class... T>
-void print (const std::tuple<T...>& _tup)
+template <typename T,
+typename std::enable_if_t<is_tuple<T>::value, bool> = true
+>
+void print(const T& tuple)
 {
-    print(_tup, std::make_index_sequence<sizeof...(T)>());
+    constexpr std::size_t tuple_size = std::tuple_size<T>{};
+    const std::integer_sequence indices = std::make_index_sequence<tuple_size>{};
+    print_indexed_sequence(tuple, indices);
 }
 
 template <typename T,
-typename std::enable_if_t<is_tuple<T>::value, bool> = 0
+typename std::enable_if_t<is_tuple<T>::value, bool> = true
 >
 void print_ip(T ip)
 {
-    // std::cout << "Calling std::string" << std::endl;
+    // std::cout << "Calling std::tuple" << std::endl;
     print(ip);
 }
+
+//template<typename T, typename... O>
+//constexpr bool are_same() {
+//    bool b = true;
+//    int arr[] = { (b = b && std::is_same_v<T, O>, 0)... };
+//    return b;
+//}
+//
+//template <
+//typename T,
+//typename... Ts,
+//typename std::enable_if_t<std::conjunction_v<std::is_same<T, Ts>...>>
+////typename std::enable_if_t<are_same<T, Ts...>()>
+//>
+//void print_ip(T x, Ts... xs)
+//{
+//    print(x, xs...);
+//}
 
 #endif /* ip_printer_hpp */
